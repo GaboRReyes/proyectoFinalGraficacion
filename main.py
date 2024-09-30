@@ -2,17 +2,24 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
-# Cargar la imagen satelital
 import os
 
-# Ruta relativa a la imagen, desde donde se está ejecutando el script
-image_path = os.path.join('pryectoFinalGraficacion', 'res', 'Imagen1.jpg')
+# Obtener la ruta absoluta del directorio donde se encuentra el script
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Continúa con tu procesamiento de la imagen
+# Construir la ruta completa a la imagen (desde 'res' dentro de la carpeta del proyecto)
+image_path = os.path.join(script_dir, 'res', 'Imagen2.jpg')
+
+# Verificar que la ruta de la imagen sea correcta
 print(f"Ruta de la imagen: {image_path}")
 
-img = Image.open(image_path).convert('L')  # Convertir a escala de grises
+# Cargar la imagen satelital
+try:
+    img = Image.open(image_path).convert('L')  # Convertir a escala de grises
+except FileNotFoundError:
+    print(f"Error: La imagen no se encontró en la ruta: {image_path}")
+    exit()
+
 img_array = np.array(img)
 
 # Crear una malla de coordenadas para la imagen
